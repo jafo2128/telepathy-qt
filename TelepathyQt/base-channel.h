@@ -217,6 +217,44 @@ private:
     Private *mPriv;
 };
 
+class TP_QT_EXPORT BaseChannelMessageArchiveInterface : public AbstractChannelInterface
+{
+    Q_OBJECT
+    Q_DISABLE_COPY(BaseChannelMessageArchiveInterface)
+
+public:
+    static BaseChannelMessageArchiveInterfacePtr create()
+    {
+        return BaseChannelMessageArchiveInterfacePtr(new BaseChannelMessageArchiveInterface());
+    }
+    template<typename BaseChannelMessageArchiveInterfaceSubclass>
+    static SharedPtr<BaseChannelMessageArchiveInterfaceSubclass> create()
+    {
+        return SharedPtr<BaseChannelMessageArchiveInterfaceSubclass>(
+                new BaseChannelMessageArchiveInterfaceSubclass());
+    }
+
+    virtual ~BaseChannelMessageArchiveInterface();
+
+    QVariantMap immutableProperties() const;
+
+    typedef Callback2<void, const QVariantMap &, DBusError*> GetMessagesCallback;
+    void setGetMessagesCallback(const GetMessagesCallback &cb);
+    void getMessages(const QVariantMap &filter, DBusError *error);
+
+protected:
+    BaseChannelMessageArchiveInterface();
+
+private:
+    void createAdaptor();
+
+    class Adaptee;
+    friend class Adaptee;
+    struct Private;
+    friend struct Private;
+    Private *mPriv;
+};
+
 class TP_QT_EXPORT BaseChannelFileTransferType : public AbstractChannelInterface
 {
     Q_OBJECT

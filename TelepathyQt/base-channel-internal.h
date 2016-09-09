@@ -157,6 +157,22 @@ public:
     BaseChannelMessagesInterface *mInterface;
 };
 
+class TP_QT_NO_EXPORT BaseChannelMessageArchiveInterface::Adaptee : public QObject
+{
+    Q_OBJECT
+
+public:
+    Adaptee(BaseChannelMessageArchiveInterface *interface);
+    ~Adaptee();
+
+private Q_SLOTS:
+    void getMessages(const QVariantMap &filter,
+            const Tp::Service::ChannelInterfaceMessageArchiveAdaptor::GetMessagesContextPtr &context);
+
+private:
+    BaseChannelMessageArchiveInterface *mInterface;
+};
+
 class TP_QT_NO_EXPORT BaseChannelFileTransferType::Adaptee : public QObject
 {
     Q_OBJECT
